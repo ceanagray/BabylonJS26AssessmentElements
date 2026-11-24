@@ -3,40 +3,169 @@ import {
     Scene,
     ArcRotateCamera,
     Vector3,
-    HemisphericLight,
     MeshBuilder,
+    StandardMaterial,
+    Color3,
+    SpotLight,
+    HemisphericLight,
+    DirectionalLight,
+    ShadowGenerator,
+    Mesh,
+    TransformNode,
+    RectAreaLight,
+    PointLight,
   } from "@babylonjs/core";
   
   
   function createBox(scene: Scene) {
-    let box = MeshBuilder.CreateBox("box",{size: 1}, scene);
-    box.position.y = 3;
+    let box = MeshBuilder.CreateBox("box",{size: 1}, scene); //creates the box and adds to the scene
+    let boxMaterial = new StandardMaterial("boxMaterial", scene); // create new material for box
+    boxMaterial.diffuseColor = new Color3(1, 0, 0); //red colour for the box
+    box.position.x = 3;// position the box at x=3
+    box.position.y = 1; // position the box at y=1
+    box.position.z = 0; //position the box at z=0
+    box.material = boxMaterial; // apply the material to the box
     return box;
-  }
-
-  
-  function createLight(scene: Scene) {
-    const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
-    light.intensity = 0.7;
-    return light;
   }
   
   function createSphere(scene: Scene) {
-    let sphere = MeshBuilder.CreateSphere(
-      "sphere",
-      { diameter: 2, segments: 32 },
-      scene,
-    );
-    sphere.position.y = 1;
+    let sphere = MeshBuilder.CreateSphere("sphere",{diameter: 1}, scene);
+    let sphereMaterial = new StandardMaterial("sphereMaterial", scene);
+    sphereMaterial.diffuseColor = new Color3(0, 0, 1); //blue colour for the sphere
+    sphere.material = sphereMaterial; // apply the material to the sphere
+    sphere.position.x = 0; // position the sphere at x=0
+    sphere.position.y = 1; // position the sphere at y=1
+    sphere.position.z = 3; // position the sphere at z=3
     return sphere;
   }
-  
+
+  function createCylinder(scene: Scene) {
+    let cylinder = MeshBuilder.CreateCylinder("cylinder",{diameter: 1, height: 2}, scene);
+    let cylinderMaterial = new StandardMaterial("cylinderMaterial", scene);
+    cylinderMaterial.diffuseColor = new Color3(0, 1, 0); //green colour for the cylinder
+    cylinder.material = cylinderMaterial; // apply the material to the cylinder
+    cylinder.position.x = -3; // position the cylinder at x=-3
+    cylinder.position.y = 1; // position the cylinder at y=1
+    cylinder.position.z = 0; // position the cylinder at z=0
+    return cylinder;
+  }
+
+  function createCone(scene: Scene) {
+    let cone = MeshBuilder.CreateCylinder("cone", { diameterTop: 0, diameterBottom: 1, height: 2 }, scene);
+    let coneMaterial = new StandardMaterial("coneMaterial", scene);
+    coneMaterial.diffuseColor = new Color3(1, 1, 0); //yellow colour for the cone
+    cone.material = coneMaterial; // apply the material to the cone
+    cone.position.x = 0; // position the cone at x=0
+    cone.position.y = 1; // position the cone at y=1
+    cone.position.z = -3; // position the cone at z=-3
+    return cone;
+  }
+
+function createHemisphericLight(scene: Scene) {
+  const light: HemisphericLight = new HemisphericLight(
+    "light",
+    new Vector3(0, 1, 0),
+    scene,
+  );
+  light.intensity = 0.3;
+  light.diffuse = new Color3(0, 1, 1); 
+  light.specular = new Color3(0, 1, 1); 
+  light.groundColor = new Color3(0, 1, 0);
+  return light;
+}
+
+function createDirectionalLight(scene: Scene) {
+  const light = new DirectionalLight("light", new Vector3(0.5, -0.5, 0.2), scene);
+  light.position = new Vector3(20, 40, 10);
+  light.intensity = 0.3;
+  light.diffuse = new Color3(1, 1, 1); 
+  light.specular = new Color3(0, 0.7, 0.3);
+  return light;
+}
+
+function createPointLight(scene: Scene ){
+    const light = new PointLight("light", new Vector3(-2.5, 0.2, 0.5),scene);
+    light.intensity = 0.5;
+    light.diffuse = new Color3(0.5, 1, 1); 
+    light.specular = new Color3(0.8, 1, 1);
+    return light;
+}
+
+function createSpotLight(scene: Scene ){
+    const light = new SpotLight("light", new Vector3(2, 1, -3), 
+        new Vector3(0, -2, 3), Math.PI / 3, 20, scene);
+    light.intensity = 1.0;
+    light.diffuse = new Color3(1, 0, 0);
+    light.specular = new Color3(0, 1, 0);
+    return light;
+}
+
+
+function createRectAreaLight(scene: Scene) {
+    const target = Vector3.Zero();
+    const lightRoot = new TransformNode("areaLightRoot", scene);
+    const light = new RectAreaLight(
+        "areaLight",
+        Vector3.Zero(),
+        3,
+        3,
+        scene
+    );
+
+    const plane = MeshBuilder.CreatePlane(
+        "debugLight",
+        { size: 3 },
+        scene
+    );
+
+    // Parent both to the same transform
+    light.parent = lightRoot;
+    plane.parent = lightRoot;
+
+    // Light settings
+    light.intensity = 20;
+    light.diffuse = new Color3(0, 0.7, 1); 
+    light.specular = new Color3(0.1, 0, 1); 
+
+    // Make plane match the light color
+    const planeMat = new StandardMaterial("debugLightMat", scene);
+    planeMat.emissiveColor = light.diffuse.clone();
+    planeMat.backFaceCulling = false;       
+    plane.material = planeMat;
+
+    // Position
+    lightRoot.position.set(0, 5, -5);
+
+    // Aim at scene centre
+    lightRoot.lookAt(target);
+
+    // Since the light emits backwards relative to the plane:
+    lightRoot.rotate(Vector3.Up(), Math.PI);
+
+    return light;
+}
+
+function createShadows(light: DirectionalLight, sphere: Mesh ,box: Mesh){
+    const shadower = new ShadowGenerator(1024, light);
+    const sm : any = shadower.getShadowMap();
+    sm.renderList.push(sphere, box);
+
+    shadower.setDarkness(0.2);
+    shadower.useBlurExponentialShadowMap = true;
+    shadower.blurScale = 4;
+    shadower.blurBoxOffset = 1;
+    shadower.useKernelBlur = true;
+    shadower.blurKernel = 64;
+    shadower.bias = 0;
+    return shadower;
+}
   function createGround(scene: Scene) {
     let ground = MeshBuilder.CreateGround(
       "ground",
-      { width: 6, height: 6 },
+      { width: 8, height: 8 },
       scene,
     );
+  
     return ground;
   }
   
@@ -60,10 +189,19 @@ import {
 export function createStartScene(engine: Engine) {
     let myscene: Scene = new Scene(engine) ;
     createBox(myscene);
-    createLight(myscene);
     createSphere(myscene);
     createGround(myscene);
     createArcRotateCamera(myscene);
+    createCylinder(myscene);
+    createCone(myscene);
+    createHemisphericLight(myscene);
+    createDirectionalLight(myscene);
+    createShadows(createDirectionalLight(myscene), createSphere(myscene), createBox(myscene));
+    createSpotLight(myscene);
+    createPointLight(myscene);
+    createRectAreaLight(myscene);
 
     return myscene;
   }
+    
+  
