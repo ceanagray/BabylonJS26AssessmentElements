@@ -4,13 +4,13 @@
   "workspaces": {
     "": {
       "dependencies": {
-        "@babylonjs/core": "^9.32.0",
+        "@babylonjs/core": "^9.37.2",
         "@babylonjs/havok": "^1.3.14",
-        "@babylonjs/inspector": "^9.32.0",
-        "@babylonjs/loaders": "^9.32.0",
+        "@babylonjs/inspector": "^9.37.2",
+        "@babylonjs/loaders": "^9.37.2",
       },
       "devDependencies": {
-        "@types/bun": "^1.4.3",
+        "@types/bun": "^1.4.5",
         "typescript": "^7.0.2",
       },
     },
@@ -20,7 +20,7 @@
 
     "@babylonjs/addons": ["@babylonjs/addons@9.32.0", "", { "peerDependencies": { "@babylonjs/core": "^9.0.0" } }, "sha512-RWdXqKDoArhXuWOudAFdFbCe5pUXNtbysMvK+gcvzsjvE5fc0CpunLXte8BMYVQwRaMfZvqV1YKkEshkrWikCw=="],
 
-    "@babylonjs/core": ["@babylonjs/core@9.32.0", "", {}, "sha512-mHBsyKJuQHbs97Rb/1qxMRg6Ru79+0BjLhGLTa34s6U/fkBCtOh+xKTQDqFpFtPqgBw9TLFcIEvFHy01vnJxwA=="],
+    "@babylonjs/core": ["@babylonjs/core@9.37.2", "", {}, "sha512-Adv1f6q9ckP1ICqB00Dz6Y+cKaynlQBc4mtBM4MnsCLNxyNB5Jh7COzAVev4Bz8zPNIjS05gMM/qRQmaSkVDlg=="],
 
     "@babylonjs/gui": ["@babylonjs/gui@9.32.0", "", { "peerDependencies": { "@babylonjs/core": "^9.0.0" } }, "sha512-VstJSVYIWp2DkyuoK72JIDUjfkurP6u9O+YHuE3yYHbRVbNdH8CQo9h6Rb9IU2zoFbnjvOA5Y9tIuHrvdexW+Q=="],
 
@@ -28,9 +28,9 @@
 
     "@babylonjs/havok": ["@babylonjs/havok@1.3.14", "", { "dependencies": { "@types/emscripten": "^1.39.6" } }, "sha512-+j2FDwLtkh5Gb//KizE8Ks3GIB/3vH8Yx9cQsMvZQpsKkH5gn089wIlJ9Yt8dJxbwBmWKGpMTIXxZE7YdOHUnQ=="],
 
-    "@babylonjs/inspector": ["@babylonjs/inspector@9.32.0", "", { "peerDependencies": { "@babylonjs/addons": "^9.0.0", "@babylonjs/core": "^9.0.0", "@babylonjs/gui": "^9.0.0", "@babylonjs/gui-editor": "^9.0.0", "@babylonjs/lite": "^1.32.0", "@babylonjs/loaders": "^9.0.0", "@babylonjs/materials": "^9.0.0", "@babylonjs/node-editor": "^9.0.0", "@babylonjs/node-geometry-editor": "^9.0.0", "@babylonjs/node-particle-editor": "^9.0.0", "@babylonjs/node-render-graph-editor": "^9.0.0", "@babylonjs/serializers": "^9.0.0", "@fluentui-contrib/react-resize-handle": "^0.8.4", "@fluentui-contrib/react-virtualizer": "^1.0.0", "@fluentui/react-charts": "^9.3.27", "@fluentui/react-components": "^9.70.0", "@fluentui/react-icons": "^2.0.310", "@fluentui/react-motion-components-preview": "^0.15.2", "@fluentui/react-utilities": "^9.26.2", "react": ">=16.14.0 <20.0.0", "react-dom": ">=16.14.0 <20.0.0", "usehooks-ts": "^3.1.1" }, "optionalPeers": ["@babylonjs/lite"], "bin": { "babylon-inspector": "bin/inspector-cli.mjs" } }, "sha512-s7RAn5W35CEdOUqv2oHck5tUwYDe/zKGL8S8MaOpb8hF3JKpB2fgVDrXXEUnqrV5/pElRW3paWgUQrKh0sPchQ=="],
+    "@babylonjs/inspector": ["@babylonjs/inspector@9.37.2", "", { "peerDependencies": { "@babylonjs/addons": "^9.0.0", "@babylonjs/core": "^9.0.0", "@babylonjs/gui": "^9.0.0", "@babylonjs/gui-editor": "^9.0.0", "@babylonjs/lite": "^1.39.3", "@babylonjs/loaders": "^9.0.0", "@babylonjs/materials": "^9.0.0", "@babylonjs/node-editor": "^9.0.0", "@babylonjs/node-geometry-editor": "^9.0.0", "@babylonjs/node-particle-editor": "^9.0.0", "@babylonjs/node-render-graph-editor": "^9.0.0", "@babylonjs/serializers": "^9.0.0", "@fluentui-contrib/react-resize-handle": "^0.8.4", "@fluentui-contrib/react-virtualizer": "^1.0.0", "@fluentui/react-charts": "^9.3.27", "@fluentui/react-components": "^9.70.0", "@fluentui/react-icons": "^2.0.310", "@fluentui/react-motion-components-preview": "^0.15.2", "@fluentui/react-utilities": "^9.26.2", "react": ">=16.14.0 <20.0.0", "react-dom": ">=16.14.0 <20.0.0", "usehooks-ts": "^3.1.1" }, "optionalPeers": ["@babylonjs/lite"], "bin": { "babylon-inspector": "bin/inspector-cli.mjs" } }, "sha512-EP2W/wYqtB7f0X8FjV8lA4j4wrc9OJCRq65+F1z3gF5mOyxiQNHQISvwgUyI9UvbwACAYBdO2O/IvXwsIL0UKQ=="],
 
-    "@babylonjs/loaders": ["@babylonjs/loaders@9.32.0", "", { "peerDependencies": { "@babylonjs/core": "^9.0.0", "babylonjs-gltf2interface": "^9.0.0" } }, "sha512-pHWbOaR34riRNxX0rffPpVcbaAoEXmjtS00A4RO43zoz4EPVg4mESX0EqzaA8yl7FbVk+aYWwyj30uR1OWrl1Q=="],
+    "@babylonjs/loaders": ["@babylonjs/loaders@9.37.2", "", { "peerDependencies": { "@babylonjs/core": "^9.0.0", "babylonjs-gltf2interface": "^9.0.0" } }, "sha512-vz/MybqLd70+CWrbI/sFi1SLPlTupFfhv9MscPE/dSz7+wpZs2Ra5sDWnJymXEML1Zq2pE3HbnGyqy0t4R2e4w=="],
 
     "@babylonjs/materials": ["@babylonjs/materials@9.32.0", "", { "peerDependencies": { "@babylonjs/core": "^9.0.0" } }, "sha512-IfYJLsHFlFSzJEvDJ3bQ4bVPiQw9LImUTTTt95IGo0yBzELgAaaziE8kv1wKkZoX6Fi7Q9k0GUYdlDyS5rlB5A=="],
 
@@ -208,7 +208,7 @@
 
     "@swc/helpers": ["@swc/helpers@0.5.23", "", { "dependencies": { "tslib": "^2.8.0" } }, "sha512-5lSsMOTXURePglDfvuAQUqkGek9Hg2kksOYay2m0+XR++b2NWYL/4sWyuvVBIs8oKnJaxkdi9whaL/sqN13afw=="],
 
-    "@types/bun": ["@types/bun@1.4.3", "", { "dependencies": { "bun-types": "1.4.3" } }, "sha512-N67Pqy8JXbAY/j0tNraS3V5mubGvc6rrrNDmDCtZLlFzccbUJPDb0tvgUBC5q4m8ybkP93Jcn1QB+RYQ6PvBhw=="],
+    "@types/bun": ["@types/bun@1.4.5", "", { "dependencies": { "bun-types": "1.4.5" } }, "sha512-DpgwNI9z0L1S0gtb45QLCWgwCUcMLnsHYMJHQvpNj7erGiCGBvpggltAIeARrtobNMKMuy0UP7i56tKKgwFs/Q=="],
 
     "@types/d3-array": ["@types/d3-array@3.2.2", "", {}, "sha512-hOLWVbm7uRza0BYXpIIW5pxfrKe0W+D5lrFiAEYR+pb6w3N2SwSMaJbXdUfSEv+dT4MfHBLtn5js0LAWaO6otw=="],
 
@@ -284,7 +284,7 @@
 
     "babylonjs-gltf2interface": ["babylonjs-gltf2interface@9.32.0", "", {}, "sha512-ANCt1Watb93re9XI3P0N05OrdGmS5jyfV+L+/+3/Pu+ye7ttC++7KdmM8JU7vCXKnrnK8G1vPJNUlVgRN3rVhw=="],
 
-    "bun-types": ["bun-types@1.4.3", "", { "dependencies": { "@types/node": "*", "undici-types": "*" } }, "sha512-tinRJNGOmUN+tEAsn2y2e942n9JHRHR42iUYzDH75NmhJqVBokGSQkkfSFdNWwsANIdrK6ACH9t01M452YyTwg=="],
+    "bun-types": ["bun-types@1.4.5", "", { "dependencies": { "@types/node": "*", "undici-types": "*" } }, "sha512-ECHn+9dhL3wv0G6u0+7dQvrnaimXiRDxxerYBmhTaLyJEEuvTPWk2Fye3XIf5Y++JIIiHKfQw4Z7V5D8KuiXbg=="],
 
     "csstype": ["csstype@3.2.3", "", {}, "sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ=="],
 
