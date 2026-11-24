@@ -1,0 +1,228 @@
+
+/* Import website fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* Basic page settings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #080808;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+/* Website header */
+header {
+    padding: 25px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #252525;
+}
+
+header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 2px;
+    color: #ffffff;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: #aaaaaa;
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #ffffff;
+}
+
+/* Main page layout */
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 8%;
+}
+
+/* Welcome section */
+.hero {
+    padding: 110px 0 100px;
+}
+
+.welcome-text,
+.section-number {
+    color: #888888;
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.hero h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(65px, 10vw, 115px);
+    line-height: 0.9;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+}
+
+.hero-description {
+    color: #aaaaaa;
+    font-size: 15px;
+    max-width: 500px;
+    line-height: 1.8;
+}
+
+/* Scene section headings */
+.scenes {
+    padding-bottom: 100px;
+}
+
+.section-heading {
+    margin-bottom: 35px;
+}
+
+.section-heading h2,
+.documentation h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 45px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.section-heading > p:last-child {
+    color: #999999;
+    font-size: 14px;
+}
+
+/* Scene box layout */
+.scene-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* Individual scene boxes */
+.scene-box {
+    display: block;
+    background-color: #111111;
+    border: 1px solid #292929;
+    padding: 15px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.scene-box:hover {
+    background-color: #191919;
+    border-color: #777777;
+    transform: translateY(-5px);
+}
+
+/* Scene preview area */
+.scene-preview {
+    height: 190px;
+    background-color: #202020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 65px;
+    color: #666666;
+    margin-bottom: 18px;
+    transition: 0.3s;
+}
+
+.scene-box:hover .scene-preview {
+    color: #ffffff;
+    background-color: #292929;
+}
+
+/* Scene titles and descriptions */
+.scene-box h3 {
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.scene-box p {
+    color: #888888;
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+
+.scene-box span {
+    color: #ffffff;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+/* Documentation section */
+.documentation {
+    padding: 65px 0;
+    border-top: 1px solid #292929;
+}
+
+.documentation > p:not(.section-number) {
+    color: #999999;
+    font-size: 14px;
+    max-width: 550px;
+    margin-bottom: 25px;
+}
+
+.documentation a {
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #777777;
+    padding-bottom: 6px;
+    transition: 0.3s;
+}
+
+.documentation a:hover {
+    color: #aaaaaa;
+    border-color: #ffffff;
+}
+
+/* Website footer */
+footer {
+    border-top: 1px solid #252525;
+    padding: 25px 8%;
+    text-align: center;
+    color: #666666;
+    font-size: 11px;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav {
+        gap: 18px;
+    }
+
+    .hero {
+        padding: 75px 0;
+    }
+
+    .scene-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
