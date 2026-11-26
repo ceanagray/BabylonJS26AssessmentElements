@@ -1,3 +1,4 @@
+
 import type { SceneData } from "./interfaces";
 
 import {
@@ -11,6 +12,7 @@ import {
   InstancedMesh,
   Mesh,
   MeshBuilder,
+  ParticleSystem,
   Scene,
   Sprite,
   SpriteManager,
@@ -18,6 +20,7 @@ import {
   Texture,
   Vector3,
   Vector4,
+  Color4,
 } from "@babylonjs/core";
 
 import { AdvancedDynamicTexture, Button, Control } from "@babylonjs/gui";
@@ -66,14 +69,17 @@ function createGround(scene: Scene) {
 function createSky(scene: Scene) {
   const skybox = MeshBuilder.CreateBox("skyBox", { size: 150 }, scene);
   const skyboxMaterial = new StandardMaterial("skyBox", scene);
+
   skyboxMaterial.backFaceCulling = false;
   skyboxMaterial.reflectionTexture = new CubeTexture(
     "./assets/textures/skybox/skybox",
     scene
   );
+
   skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
   skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
   skyboxMaterial.specularColor = new Color3(0, 0, 0);
+
   skybox.material = skyboxMaterial;
   return skybox;
 }
@@ -225,7 +231,9 @@ function createTrees(scene: Scene) {
     tree.position.z = Math.random() * -35 + 8;
     tree.position.y = 0.2;
   }
-  // nothing returned by this function
+
+ 
+  return spriteManagerTrees;
 }
 
 function createHemisphericLight(scene: Scene) {
@@ -239,6 +247,48 @@ function createHemisphericLight(scene: Scene) {
   light.specular = new Color3(1, 0.8, 0.8);
   light.groundColor = new Color3(0, 0.2, 0.7);
   return light;
+}
+
+function createDayNightCycle(
+  light: HemisphericLight, // parameter to accept the hemispheric light
+  skyMaterial: StandardMaterial, // parameter to accept the sky material
+  treeManager: SpriteManager
+) {
+  // Function to set daytime
+  function setDay() {
+    light.intensity = 0.8; // set intensity to 0.8 for daytime
+    light.diffuse = new Color3(1, 1, 1); // set diffuse color to white for daytime
+    light.groundColor = new Color3(0, 0.2, 0.7); // set ground color to blue for daytime
+
+    skyMaterial.disableLighting = true;
+    if (skyMaterial.reflectionTexture) {
+      skyMaterial.reflectionTexture.level = 1;
+    }
+
+    // Restore the original tree colours
+    treeManager.sprites.forEach((tree) => {
+      tree.color = new Color4(1, 1, 1, 1);
+    });
+  }
+
+  // Function to set nighttime
+  function setNight() {
+    light.intensity = 0.2; // set intensity to 0.2 for nighttime
+    light.diffuse = new Color3(0.2, 0.25, 0.5); // set diffuse color to dark blue for nighttime
+    light.groundColor = new Color3(0.02, 0.03, 0.1); // set ground color to dark blue for nighttime
+
+    skyMaterial.disableLighting = true;
+    if (skyMaterial.reflectionTexture) {
+      skyMaterial.reflectionTexture.level = 0.15;
+    }
+
+    // Darken the trees with a blue tint
+    treeManager.sprites.forEach((tree) => {
+      tree.color = new Color4(0.3, 0.3, 0.5, 1);
+    });
+  }
+
+  return { setDay, setNight }; // return an object containing the setDay and setNight functions
 }
 
 async function initializeAudio() {
@@ -294,6 +344,53 @@ function createAudioButton(scene: Scene) {
   gui.addControl(button);
 }
 
+function createDayNightButtons // function to create buttons for day and night mode
+(
+  scene: Scene,
+  dayNight: ReturnType<typeof createDayNightCycle> // parameter to accept the dayNight object returned from createDayNightCycle
+) {
+  const gui = AdvancedDynamicTexture.CreateFullscreenUI("dayNightUI", true, scene); // create a fullscreen UI for the buttons
+
+  // Day button
+  const dayButton = Button.CreateSimpleButton("dayButton", "DAY"); // create a button for day mode
+  dayButton.width = "100px"; // set the width of the button
+  dayButton.height = "45px"; // set the height of the button
+  dayButton.cornerRadius = 8; // set the corner radius of the button
+  dayButton.color = "white"; // set the text color of the button
+  dayButton.background = "#D69B38"; // set the background color of the button
+  dayButton.thickness = 0; // set the thickness of the button border to 0
+  dayButton.fontSize = 18; // set the font size of the button text
+  dayButton.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT; // align the button to the left of the screen
+  dayButton.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP; // align the button to the top of the screen
+  dayButton.leftInPixels = 20; // set the left position of the button in pixels
+  dayButton.topInPixels = 20; // set the top position of the button in pixels
+
+  dayButton.onPointerUpObservable.add(() => {
+    dayNight.setDay(); // call the setDay function from the dayNight object when the button is clicked
+  });
+
+  // Night button
+  const nightButton = Button.CreateSimpleButton("nightButton", "NIGHT"); // create a button for night mode
+  nightButton.width = "100px"; // set the width of the button
+  nightButton.height = "45px"; // set the height of the button
+  nightButton.cornerRadius = 8; // set the corner radius of the button
+  nightButton.color = "white"; // set the text color of the button
+  nightButton.background = "#26345E"; // set the background color of the button
+  nightButton.thickness = 0; // set the thickness of the button border to 0
+  nightButton.fontSize = 18; // set the font size of the button text
+  nightButton.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT; // align the button to the left of the screen
+  nightButton.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP; // align the button to the top of the screen
+  nightButton.leftInPixels = 20; // set the left position of the button in pixels
+  nightButton.topInPixels = 75; // set the top position of the button in pixels
+
+  nightButton.onPointerUpObservable.add(() => {
+    dayNight.setNight(); // call the setNight function from the dayNight object when the button is clicked
+  });
+
+  gui.addControl(dayButton); // add the day button to the GUI
+  gui.addControl(nightButton); // add the night button to the GUI
+}
+
 function createArcRotateCamera(scene: Scene) {
   let camAlpha = -Math.PI / 2,
     camBeta = Math.PI / 2.5,
@@ -318,16 +415,27 @@ function createArcRotateCamera(scene: Scene) {
   return camera;
 }
 
-export default function createStartScene(engine: Engine) {
+export default function createStartScene(engine: Engine) 
+{
   let scene = new Scene(engine);
   let ground = createGround(scene);
   let sky = createSky(scene);
   let lightHemispheric = createHemisphericLight(scene);
+
+  let skyMaterial = sky.material as StandardMaterial;
+
   createHouses(scene, 3);
-  createTrees(scene);
+  let treeManager = createTrees(scene);
   createTerrain(scene);
+
+  let dayNight = createDayNightCycle(lightHemispheric, skyMaterial, treeManager);
+
+  dayNight.setDay(); // set the village to daytime when it first loads
+
+  createDayNightButtons(scene, dayNight);
   let camera = createArcRotateCamera(scene);
-  createAudioButton(scene);
+  createAudioButton(scene); 
+  
 
   let that: SceneData = {
     scene,
